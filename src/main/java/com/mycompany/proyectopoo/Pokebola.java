@@ -12,12 +12,18 @@ public class Pokebola {
     private static int contador = 1;//contador para el codigo secuencial
     private String codigo;
     private String tipoPokebola;
+    private int cantidadpokebolas;
     private Pokemon pokemonContenido; // El pokémon que atrapó (puede ser null si está vacía)
     private boolean estaDisponible;
+    
+    //constructor para el objeto
 
-    public Pokebola(String codigo, String tipoPokebola) {
-        this.codigo = generarCodigo();
+    public Pokebola(String codigo, String tipoPokebola, int cantidadpokebolas, Pokemon pokemonContenido, boolean estaDisponible) {
+        this.codigo = codigo;
         this.tipoPokebola = tipoPokebola;
+        this.cantidadpokebolas = cantidadpokebolas;
+        this.pokemonContenido = pokemonContenido;
+        this.estaDisponible = estaDisponible;
     }
  //metodo para generar codigo
  public static String generarCodigo() {

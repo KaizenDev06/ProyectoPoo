@@ -13,23 +13,17 @@ import java.util.Scanner;
  */
 //MAIN DEL PROYECTO
 public class BitacoraEntrenador {
-    private String codigo;
-    private int contador = 1;
-    private String nombre;
-    private int opciones;
-    private String usuario;
-    private String email;
-   
-    public static void main(String[] args) {
-    /*Pokemon pk = new Pokemon(String codigo, String nombre, String especie, String tipoPrincipal, int nivel, int puntosSalud, int puntosSaludMaximos);
-    Pokebola pb = new Pokebola();
-    Equipo team = new Equipo();
-    CentroSalud iees = new CentroSalud();
-    ComprobanteCuracion comcura = new ComprobanteCuracion(); idk esto lo ire arreglando poco a poco
-   */
+       public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Entrenador> entrenadores = new ArrayList<>();
-    
+    // 2. LISTA DE EQUIPOS
+        ArrayList<Equipo> listaEquipos = new ArrayList<>();
+        listaEquipos.add(new Equipo("Valor", "Rojo"));
+        listaEquipos.add(new Equipo("Místico", "Azul"));
+        listaEquipos.add(new Equipo("Instinto", "Amarillo"));
+        
+        // Instancia de tu clase controladora de métodos
+        metodosbitacora control = new metodosbitacora();
       //menu
         System.out.println("=".repeat(30));
         System.out.println("BITACORA ENTRENADOR");
@@ -41,47 +35,27 @@ public class BitacoraEntrenador {
           System.out.println("Ingrese una opcion: ");
           opciones = sc.nextInt();
           sc.nextLine();
-          if (opciones == 1){
-              System.out.println("=".repeat(30));
-              System.out.println("Creacion de perfil para entrenador");
-              System.out.println("=".repeat(30));
-              System.out.println("Ingrese nombre del Entrenador: ");
-              String nombrenuevo = sc.nextLine();
-              System.out.println("Ingrese usuario el entrenador: ");
-              String usuarionuevo = sc.nextLine();
-              System.out.println("Ingrese email del entrenador: ");
-              String emailnuevo =sc.nextLine();
-              Entrenador trainer = new Entrenador(nombrenuevo, usuarionuevo, emailnuevo, new ArrayList<>());
-              entrenadores.add(trainer);
-              // Mostramos un mensaje de éxito y sus datos usando los getters
-                System.out.println("\n¡Perfil creado con éxito!");
-                System.out.println("----------------------------------------");
-                System.out.printf(trainer.getCodigo() + " "+ trainer.getNombre()+" "+ trainer.getUsuario()+" "+ trainer.getEmail() + "\n");
-                System.out.println("----------------------------------------\n");
-             
-          } else if (opciones == 2){
-                System.out.println("\n--- LISTA DE ENTRENADORES REGISTRADOS ---");
-                if (entrenadores.isEmpty()) {
-                    System.out.println("No hay entrenadores registrados todavía.\n");
-                } else {
-                    for (int i = 0; i < entrenadores.size(); i++) {
-                        Entrenador t = entrenadores.get(i);
-                        int cantidadPokebolas = t.getMochila().size();
-                        System.out.println((i + 1) + ". "+t.getCodigo() + t.getNombre() + " (@" + t.getUsuario() + ")"+ "Equipo:"+ t.getEquipo() + Pokebolas en mochila: "+cantidadPokebolas);
-                    }
-                    System.out.println();
-                }
-            } else if (opciones == 3) {
+        switch (opciones) {
+            case 1:
+                control.crearPerfil(sc, entrenadores);
+               
+            case 2:
+                control.seleccionarPerfil(sc, entrenadores,listaEquipos);
+                
+            case 3:
                 System.out.println("\n¡Saliendo del programa. Hasta luego!");
-            } else {
-                System.out.println("\nOpción no válida. Intente de nuevo.\n");
-            }
+               
+            default:
+                System.out.println("\nOpción no válida.\n");
         }
-      sc.close();
-      }
-      
-
     }
+    sc.close();
+}
+
+                        
+    }
+      
+     
   
     
 

@@ -15,12 +15,14 @@ public class Equipo {
     private String color;
     private ArrayList<Entrenador> entrenador;
 
-    public Equipo(String codigo, String nombreEquipo, String color, ArrayList<Entrenador> entrenador) {
-        this.codigo = generarCodigo();
-        this.nombreEquipo = nombreEquipo;
-        this.color = color;
-        this.entrenador = entrenador;
-    }
+    public Equipo(String nombreEquipo, String color) {
+    this.codigo = generarCodigo(); // Genera TEAM-001 automáticamente
+    this.nombreEquipo = nombreEquipo;
+    this.color = color;
+    this.entrenador = new ArrayList<>();
+}
+    
+
  //metodo para generar codigo de equipo
      public static String generarCodigo() {
         String nuevoCodigo = String.format("TEAM-%03d", contador);
@@ -47,16 +49,8 @@ public class Equipo {
         return nombreEquipo;
     }
 
-    public void setNombreEquipo(String nombreEquipo) {
-        this.nombreEquipo = nombreEquipo;
-    }
-
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public ArrayList<Entrenador> getEntrenador() {

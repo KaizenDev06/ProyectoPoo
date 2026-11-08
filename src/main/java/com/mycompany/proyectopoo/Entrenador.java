@@ -14,6 +14,7 @@ public class Entrenador {
     private String nombre;
     private String usuario;
     private String email;
+    private String equipo;
     private ArrayList<Pokebola> mochila;
     
 //constructores para entrenador existente y nuevo entrenador
@@ -32,6 +33,16 @@ public class Entrenador {
         this.codigo = generarCodigo();
 
     }
+
+    public Entrenador(String codigo, String nombre, String usuario, String email, String equipo, ArrayList<Pokebola> mochila) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.email = email;
+        this.equipo = equipo;
+        this.mochila = mochila;
+    }
+    
  //metodos para generar codigo 
      public static String generarCodigo() {
         String nuevoCodigo = String.format("ET-%03d", contador);
@@ -78,6 +89,13 @@ public class Entrenador {
     public void setMochila(ArrayList<Pokebola> mochila) {
         this.mochila = mochila;
     }
+    public String getEquipo() {
+    return equipo;
+}
+
+public void setEquipo(String equipo) {
+    this.equipo = equipo;
+}
 
 
     
