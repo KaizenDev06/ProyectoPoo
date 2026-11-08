@@ -1,0 +1,42 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-encoding
+'UTF-8'
+-protected
+--release
+25
+-sourcepath
+'C:/Users/raula/OneDrive/Documentos/NetBeansProjects/ProyectoPoo/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/raula/OneDrive/Documentos/NetBeansProjects/ProyectoPoo/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'ProyectoPoo 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'ProyectoPoo 1.0-SNAPSHOT API'
+com.mycompany.proyectopoo
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\src\main\java = 1794006122652
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\allclasses-index.html = 1794099210609
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\allpackages-index.html = 1794099210614
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\element-list = 1794099210431
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\help-doc.html = 1794099210690
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\index-all.html = 1794099210670
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\index.html = 1794099210680
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\member-search-index.js = 1794099210626
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\module-search-index.js = 1794099210617
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\overview-tree.html = 1794099210563
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\package-search-index.js = 1794099210620
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\search.html = 1794099210676
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\tag-search-index.js = 1794099210629
+C:\Users\raula\OneDrive\Documentos\NetBeansProjects\ProyectoPoo\target\reports\apidocs\type-search-index.js = 1794099210623
