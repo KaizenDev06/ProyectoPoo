@@ -178,6 +178,335 @@ public void administrarEquipos(Scanner sc, ArrayList<Equipo> listaEquipos) {
         }
     }
 }
+    // ================= ADMINISTRAR POKÉMONES =================
+    public void menuPokemones(Scanner sc, Entrenador entrenador) {
+        int opcion = 0;
+        while (opcion != 4) {
+            System.out.println("\n--- ADMINISTRAR POKEMONES ---");
+            System.out.println("1. Registrar nuevo Pokemon en Pokebola vacía");
+            System.out.println("2. Listar mis Pokemones");
+            System.out.println("3. Liberar Pokemon (Eliminar de la Pokebola)");
+            System.out.println("4. Regresar");
+            opcion = leerEntero(sc, "Ingrese una opción: ", 1, 4);
+            switch (opcion) {
+                case 1: registrarPokemon(sc, entrenador); break;
+                case 2: listarPokemones(entrenador); break;
+                case 3: liberarPokemon(sc, entrenador); break;
+                case 4: System.out.println("\nRegresando..."); break;
+            }
+        }
+    }
 
+    public void registrarPokemon(Scanner sc, Entrenador entrenador) {
+        Pokebola vacia = buscarPokebolaVacia(entrenador);
+        if (vacia == null) {
+            System.out.println("\nNo tienes Pokebolas vacías. Agrega más en "
+                    + "'Administrar Información del Entrenador'.");
+            return;
+        }
+        System.out.println("\n--- REGISTRAR NUEVO POKEMON (escribe 0 en el nombre para cancelar) ---");
+        String nombre = leerTexto(sc, "Nombre: ");
+        if (nombre.equals("0")) {
+            return;
+        }
+        String especie = leerTexto(sc, "Especie: ");
+        String tipo = leerTexto(sc, "Tipo principal (Fuego, Agua, Planta, ...): ");
+        int nivel = leerEntero(sc, "Nivel (1-100): ", 1, 100);
+        int ps = leerEntero(sc, "Puntos de Salud PS (1-999): ", 1, 999);
+
+        Pokemon nuevo = new Pokemon(nombre, especie, tipo, nivel, ps);
+        vacia.guardarPokemon(nuevo);
+        System.out.println("\n¡" + nombre + " fue guardado en la Pokebola " + vacia.getCodigo() + "!");
+    }
+
+    public void listarPokemones(Entrenador entrenador) {
+        System.out.println("\n--- MIS POKEMONES ---");
+        boolean hay = false;
+        for (Pokebola pb : entrenador.getMochila()) {
+            if (!pb.estaVacia()) {
+                Pokemon p = pb.getPokemonContenido();
+                System.out.println("Pokebola " + pb.getCodigo() + " | Cód: " + p.getCodigo()
+                        + " | " + p.getNombre() + " (" + p.getEspecie() + ")"
+                        + " | Tipo: " + p.getTipoPrincipal()
+                        + " | Nv. " + p.getNivel()
+                        + " | PS: " + p.getPuntosSalud());
+                hay = true;
+            }
+        }
+        if (!hay) {
+            System.out.println("Aún no has capturado ningún Pokémon.");
+        }
+    }
+
+    public void liberarPokemon(Scanner sc, Entrenador entrenador) {
+        listarPokemones(entrenador);
+        if (obtenerPokemones(entrenador).isEmpty()) {
+            return;
+        }
+        String codigo = leerTexto(sc, "\nCódigo de la Pokebola a liberar (ej. PB-001, 0 para regresar): ");
+        if (codigo.equals("0")) {
+            return;
+        }
+        for (Pokebola pb : entrenador.getMochila()) {
+            if (pb.getCodigo().equalsIgnoreCase(codigo)) {
+                if (pb.estaVacia()) {
+                    System.out.println("Esa Pokebola ya está vacía.");
+                } else {
+                    Pokemon liberado = pb.liberarPokemon();
+                    System.out.println("¡" + liberado.getNombre() + " fue liberado! La Pokebola "
+                            + pb.getCodigo() + " quedó disponible.");
+                }
+                return;
+            }
+        }
+        System.out.println("No existe una Pokebola con ese código.");
+    }
+
+    // ================= ADMINISTRAR GIMNASIOS =================
+    public void menuGimnasios(Scanner sc, Entrenador entrenador, ArrayList<Gimnasio> gimnasios) {
+        int opcion = 0;
+        while (opcion != 4) {
+            System.out.println("\n--- ADMINISTRAR GIMNASIOS POKEMON ---");
+            System.out.println("1. Listar Gimnasios");
+            System.out.println("2. Registrar nuevo Gimnasio");
+            System.out.println("3. Registrar Bitácora de Batalla / Visita a Gimnasio");
+            System.out.println("4. Regresar");
+            opcion = leerEntero(sc, "Ingrese una opción: ", 1, 4);
+            switch (opcion) {
+                case 1: listarGimnasios(gimnasios); break;
+                case 2: registrarGimnasio(sc, gimnasios); break;
+                case 3: registrarBatalla(sc, entrenador, gimnasios); break;
+                case 4: System.out.println("\nRegresando..."); break;
+            }
+        }
+    }
+
+    public void listarGimnasios(ArrayList<Gimnasio> gimnasios) {
+        System.out.println("\n--- GIMNASIOS ---");
+        if (gimnasios.isEmpty()) {
+            System.out.println("No hay gimnasios registrados.");
+            return;
+        }
+        for (Gimnasio g : gimnasios) {
+            System.out.println("Cód: " + g.getCodigo() + " | " + g.getNombre()
+                    + " | Ciudad: " + g.getCiudad()
+                    + " | Líder: " + g.getLider()
+                    + " | Medalla: " + g.getMedalla());
+        }
+    }
+
+    public void registrarGimnasio(Scanner sc, ArrayList<Gimnasio> gimnasios) {
+        System.out.println("\n--- REGISTRAR GIMNASIO (escribe 0 en el nombre para cancelar) ---");
+        String nombre = leerTexto(sc, "Nombre: ");
+        if (nombre.equals("0")) {
+            return;
+        }
+        String ciudad = leerTexto(sc, "Ciudad: ");
+        String lider = leerTexto(sc, "Líder de gimnasio: ");
+        String medalla = leerTexto(sc, "Tipo de medalla: ");
+        Gimnasio g = new Gimnasio(nombre, ciudad, lider, medalla);
+        gimnasios.add(g);
+        System.out.println("\n¡Gimnasio registrado con código " + g.getCodigo() + "!");
+    }
+
+    public void registrarBatalla(Scanner sc, Entrenador entrenador, ArrayList<Gimnasio> gimnasios) {
+        if (gimnasios.isEmpty()) {
+            System.out.println("\nNo hay gimnasios registrados.");
+            return;
+        }
+        ArrayList<Pokemon> pokemones = obtenerPokemones(entrenador);
+        if (pokemones.isEmpty()) {
+            System.out.println("\nNo tienes Pokémones para combatir.");
+            return;
+        }
+        System.out.println("\n--- REGISTRAR BATALLA ---");
+        for (int i = 0; i < gimnasios.size(); i++) {
+            Gimnasio g = gimnasios.get(i);
+            System.out.println((i + 1) + ". " + g.getNombre() + " (" + g.getCiudad() + ")");
+        }
+        System.out.println("0. Regresar");
+        int gi = leerEntero(sc, "Seleccione gimnasio: ", 0, gimnasios.size());
+        if (gi == 0) {
+            return;
+        }
+        Gimnasio gimnasio = gimnasios.get(gi - 1);
+
+        for (int i = 0; i < pokemones.size(); i++) {
+            Pokemon p = pokemones.get(i);
+            System.out.println((i + 1) + ". " + p.getNombre() + " (Nv. " + p.getNivel()
+                    + ", PS " + p.getPuntosSalud() + ")");
+        }
+        System.out.println("0. Regresar");
+        int pi = leerEntero(sc, "Seleccione Pokémon: ", 0, pokemones.size());
+        if (pi == 0) {
+            return;
+        }
+        Pokemon pokemon = pokemones.get(pi - 1);
+
+        System.out.println("1. Victoria");
+        System.out.println("2. Derrota");
+        int resultado = leerEntero(sc, "Resultado: ", 1, 2);
+
+        System.out.println("\n" + "=".repeat(ANCHO));
+        System.out.println("BITÁCORA DE BATALLA");
+        System.out.println("Entrenador: " + entrenador.getNombre());
+        System.out.println("Gimnasio: " + gimnasio.getNombre() + " (Líder: " + gimnasio.getLider() + ")");
+        System.out.println("Pokémon: " + pokemon.getNombre());
+        System.out.println("Resultado: " + (resultado == 1 ? "VICTORIA" : "DERROTA"));
+        if (resultado == 1) {
+            System.out.println("¡Ganaste la medalla " + gimnasio.getMedalla() + "!");
+        }
+        System.out.println("=".repeat(ANCHO));
+    }
+
+    // ================= ADMINISTRAR CENTROS DE SALUD =================
+    public void menuCentrosSalud(Scanner sc, Entrenador entrenador, ArrayList<CentroSalud> centros) {
+        int opcion = 0;
+        while (opcion != 4) {
+            System.out.println("\n--- ADMINISTRAR CENTROS DE SALUD ---");
+            System.out.println("1. Listar Centros de Salud");
+            System.out.println("2. Registrar nuevo Centro de Salud");
+            System.out.println("3. Registrar Visita / Curación de Pokemones");
+            System.out.println("4. Regresar");
+            opcion = leerEntero(sc, "Ingrese una opción: ", 1, 4);
+            switch (opcion) {
+                case 1: listarCentros(centros); break;
+                case 2: registrarCentro(sc, centros); break;
+                case 3: registrarVisita(sc, entrenador, centros); break;
+                case 4: System.out.println("\nRegresando..."); break;
+            }
+        }
+    }
+
+    public void listarCentros(ArrayList<CentroSalud> centros) {
+        System.out.println("\n--- CENTROS DE SALUD POKEMON ---");
+        if (centros.isEmpty()) {
+            System.out.println("No hay centros de salud registrados.");
+            return;
+        }
+        for (CentroSalud c : centros) {
+            System.out.println("Cód: " + c.getCodigo() + " | " + c.getNombre()
+                    + " | Ciudad: " + c.getCiudad()
+                    + " | Enfermera: " + c.getEnfermeraCargo());
+        }
+    }
+
+    public void registrarCentro(Scanner sc, ArrayList<CentroSalud> centros) {
+        System.out.println("\n--- REGISTRAR CENTRO DE SALUD (escribe 0 en el nombre para cancelar) ---");
+        String nombre = leerTexto(sc, "Nombre: ");
+        if (nombre.equals("0")) {
+            return;
+        }
+        String ciudad = leerTexto(sc, "Ubicación/Ciudad: ");
+        String enfermera = leerTexto(sc, "Nombre de la enfermera a cargo: ");
+        CentroSalud c = new CentroSalud(nombre, ciudad, enfermera);
+        centros.add(c);
+        System.out.println("\n¡Centro de salud registrado con código " + c.getCodigo() + "!");
+    }
+
+    public void registrarVisita(Scanner sc, Entrenador entrenador, ArrayList<CentroSalud> centros) {
+        if (centros.isEmpty()) {
+            System.out.println("\nNo hay centros de salud registrados.");
+            return;
+        }
+        ArrayList<Pokemon> pokemones = obtenerPokemones(entrenador);
+        if (pokemones.isEmpty()) {
+            System.out.println("\nNo tienes Pokémones para curar.");
+            return;
+        }
+        System.out.println("\n--- REGISTRAR VISITA ---");
+        for (int i = 0; i < centros.size(); i++) {
+            CentroSalud c = centros.get(i);
+            System.out.println((i + 1) + ". " + c.getNombre() + " (" + c.getCiudad() + ")");
+        }
+        System.out.println("0. Regresar");
+        int ci = leerEntero(sc, "Seleccione centro: ", 0, centros.size());
+        if (ci == 0) {
+            return;
+        }
+        CentroSalud centro = centros.get(ci - 1);
+
+        System.out.println("\n1. Curar todos los Pokémones");
+        System.out.println("2. Curar un Pokémon");
+        System.out.println("3. Regresar");
+        int modo = leerEntero(sc, "Ingrese una opción: ", 1, 3);
+        if (modo == 3) {
+            return;
+        }
+
+        ArrayList<Pokemon> aCurar = new ArrayList<>();
+        if (modo == 1) {
+            aCurar.addAll(pokemones);
+        } else {
+            for (int i = 0; i < pokemones.size(); i++) {
+                Pokemon p = pokemones.get(i);
+                System.out.println((i + 1) + ". " + p.getNombre() + " (PS " + p.getPuntosSalud()
+                        + "/" + p.getPuntosSaludMaximos() + ")");
+            }
+            System.out.println("0. Regresar");
+            int pi = leerEntero(sc, "Seleccione Pokémon: ", 0, pokemones.size());
+            if (pi == 0) {
+                return;
+            }
+            aCurar.add(pokemones.get(pi - 1));
+        }
+
+        System.out.println("\n" + "=".repeat(ANCHO));
+        System.out.println("COMPROBANTE DE CURACIÓN");
+        System.out.println("Centro: " + centro.getNombre() + " - " + centro.getCiudad());
+        System.out.println("Enfermera a cargo: " + centro.getEnfermeraCargo());
+        System.out.println("Entrenador: " + entrenador.getNombre());
+        System.out.println("-".repeat(ANCHO));
+        for (Pokemon p : aCurar) {
+            int antes = p.getPuntosSalud();
+            p.curar();
+            System.out.println(p.getNombre() + ": PS " + antes + " -> " + p.getPuntosSalud());
+        }
+        System.out.println("=".repeat(ANCHO));
+    }
+
+    // ================= AUXILIARES =================
+    private Pokebola buscarPokebolaVacia(Entrenador entrenador) {
+        for (Pokebola pb : entrenador.getMochila()) {
+            if (pb.estaVacia()) {
+                return pb;
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Pokemon> obtenerPokemones(Entrenador entrenador) {
+        ArrayList<Pokemon> lista = new ArrayList<>();
+        for (Pokebola pb : entrenador.getMochila()) {
+            if (!pb.estaVacia()) {
+                lista.add(pb.getPokemonContenido());
+            }
+        }
+        return lista;
+    }
+
+    private int leerEntero(Scanner sc, String mensaje, int min, int max) {
+        while (true) {
+            System.out.print(mensaje);
+            try {
+                int valor = Integer.parseInt(sc.nextLine().trim());
+                if (valor >= min && valor <= max) {
+                    return valor;
+                }
+                System.out.println("Ingrese un número entre " + min + " y " + max + ".");
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Ingrese un número.");
+            }
+        }
+    }
+
+    private String leerTexto(Scanner sc, String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = sc.nextLine().trim();
+        } while (texto.isEmpty());
+        return texto;
+    }
 }
 
