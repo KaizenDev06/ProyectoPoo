@@ -1,13 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyectopoo;
-
-/**
- *
- * @author raula
- */
-public class CentroSalud {
+public class CentroSalud extends LugarPokemon{
+    private static int contador = 1;
+    private String enfermeraCargo;
+    private static int enfermeraCentro = 1; 
     
+    //Constructores
+    public CentroSalud(String nombre, String ciudad, String enfermeraCargo){
+        super(generarCodigo(), nombre, ciudad);
+        this.enfermeraCargo = enfermeraCargo;
+    }
+    
+    
+    
+    //Generar codigo
+    public static String generarCodigo() {
+        String nuevoCodigo = String.format("ET-%03d", contador);
+        contador++;
+        return nuevoCodigo;
+    }
 }
