@@ -61,6 +61,16 @@ public class Equipo {
         this.entrenador = entrenador;
     }
 
-    
+
+    //metodo para enlazar entrenador con equipo
+    public void agregarEntrenador(Entrenador e) {
+    entrenador.add(e);
+    e.setEquipo(this);
+    }
+//tostring
+    @Override
+    public String toString() {
+        return nombreEquipo + " (" + color + ")";
+    }
     
 }

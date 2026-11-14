@@ -63,5 +63,13 @@ public class Pokebola {
     public void setTipoPokebola(String tipoPokebola) {
         this.tipoPokebola = tipoPokebola;
     }
-    
+    //metodos auxiliares
+      private Pokebola buscarPokebolaVacia(Entrenador entrenador) {
+        for (Pokebola pb : entrenador.getMochila()) {
+            if (pb.estaVacia()) {
+                return pb;
+            }
+        }
+        return null;
+    }
 }
